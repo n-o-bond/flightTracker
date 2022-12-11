@@ -138,19 +138,4 @@ public class FlightController {
         flightService.update(flight);
         return "redirect:/flights/" + id + "/read";
     }
-
-//    @PreAuthorize("isFullyAuthenticated()")
-//    @GetMapping("/all/search")
-//    public String search(Model model,@ModelAttribute("flight") FlightDto flightDto){
-//        List<Flight> flights = flightService.getAll();
-//        List<Flight> result = new ArrayList<>();
-//        for(int i = 0; i< flights.size(); i++){
-//            if(flights.get(i).getAirport_of_departure().equals(flightDto.getAirport_of_departure())){
-//                result.add(flights.get(i));
-//            }
-//        }
-//        model.addAttribute("result", result);
-//        return "flights-list";
-//    }
-
 }
