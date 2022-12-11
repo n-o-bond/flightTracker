@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Info about Flight</title>
+</head>
+<body>
+<div th:replace="header"></div>
+<div class="col-md-offset-2">
+    <div>
+        <h2>Info about Flight</h2>
+        <table class="table">
+            <tr>
+                <td>Id:</td>
+                <td>
+                    <b th:text="${flight.id}"></b>
+                </td>
+            </tr>
+            <tr>
+                <td>Title:</td>
+                <td>
+                    <b th:text="${flight.title}"></b>
+                </td>
+            </tr>
+            <tr>
+                <td>Airport of departure:</td>
+                <td>
+                    <b th:text="${flight.airport_of_departure}"></b>
+                </td>
+            </tr>
+            <tr>
+                <td>Airport of arrival:</td>
+                <td>
+                    <b th:text="${flight.airport_of_arrival}"></b>
+                </td>
+            </tr>
+            <tr>
+                <td>Departure time:</td>
+                <td>
+                    <b th:text="${#temporals.format(flight.departure_time, 'dd.MM.yyyy HH:mm')}"></b>
+                </td>
+            </tr>
+            <tr>
+                <td>Arrived time:</td>
+                <td>
+                    <b th:text="${#temporals.format(flight.arrived_time, 'dd.MM.yyyy HH:mm')}"></b>
+                </td>
+            </tr>
+            <tr>
+                <td>Flight status</td>
+                <td>
+                    <b th:text="${flight.flightStatus}"></b>
+                </td>
+            </tr>
+            <tr>
+                <td>Price:</td>
+                <td>
+                    <b th:text="${flight.price}"></b>
+                </td>
+            </tr>
+        </table>
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{|/flights/${flight.id}/update/users/${#authentication.details.id}|}">Edit</a>
+            <a th:href="@{|/flights/${flight.id}/delete/users/${#authentication.details.id}|}">Remove</a>
+        </div>
+    </div>
+
+    <div align="center">
+        <div style="display: inline-flex">
+            <form class="form-horizontal" th:action="@{|/flights/${flight.id}/add/users/${#authentication.details.id}|}"
+                  method="get">
+                <input class="btn-success btn-sm" type="submit" value="Add to My Flights">
+            </form>
+        </div>
+        <div style="display: inline-flex">
+            <form class="form-horizontal"
+                  th:action="@{|/flights/${flight.id}/remove/users/${#authentication.details.id}|}" method="get">
+                <input class="btn-success btn-sm" type="submit" value="Remove with My Flights">
+            </form>
+        </div>
+    </div>
+
+    <br>
+    <h2>Passengers:</h2>
+    <br>
+    <table class="table">
+        <tr th:each="user, i : ${flight.passengers}">
+            <td th:text="${i.index + 1}"></td>
+            <td th:text="${user.firstName + ' ' + user.lastName}"></td>
+        </tr>
+    </table>
+    <div class="col-sm-offset-2 col-sm-8">
+        <input name="id" th:value="*{flight.id}" type="hidden"/>
+        <input name="user_id" th:value="${#authentication.details.id}" type="hidden">
+    </div>
+
+</div>
+</body>
+</html>

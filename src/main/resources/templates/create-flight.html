@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Create New Flight</title>
+</head>
+<body>
+<div th:replace="header"></div>
+<div class="col-md-offset-2">
+    <h2>Create New Flight</h2>
+</div>
+<form class="form-horizontal" th:action="@{/flights/create/users/{user_id}(user_id = ${#authentication.details.id})}" th:object="${flight}" method="post">
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="title">Title:</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" th:field="*{title}" id="title"/>
+            <small class="form-text text-muted" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="airport_of_departure">Airport of departure:</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" th:field="*{airport_of_departure}" id="airport_of_departure"/>
+            <small class="form-text text-muted" th:if="${#fields.hasErrors('airport_of_departure')}" th:errors="*{airport_of_departure}"></small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="airport_of_arrival">Airport of arrival:</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" th:field="*{airport_of_arrival}" id="airport_of_arrival"/>
+            <small class="form-text text-muted" th:if="${#fields.hasErrors('airport_of_arrival')}" th:errors="*{airport_of_arrival}"></small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="departure_time">Departure time:</label>
+        <div class="col-sm-8">
+            <input type="datetime-local" class="form-control" th:field="*{departure_time}" id="departure_time"/>
+            <small class="form-text text-muted" th:if="${#fields.hasErrors('departure_time')}" th:errors="*{departure_time}"></small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="arrived_time">Arrived time:</label>
+        <div class="col-sm-8">
+            <input type="datetime-local" class="form-control" th:field="*{arrived_time}" id="arrived_time"/>
+            <small class="form-text text-muted" th:if="${#fields.hasErrors('arrived_time')}" th:errors="*{arrived_time}"></small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="flight_status">Flight status:</label>
+        <div class="col-sm-8">
+            <select class="form-control" name="flightStatus" id="flight_status">
+                <option th:each="flightStatus : ${statuses}" th:value="${flightStatus}" th:text="${flightStatus.name().substring(0,1) +
+                flightStatus.name().substring(1).toLowerCase()}"/>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="price">Price:</label>
+        <div class="col-sm-8">
+            <input type="number" class="form-control" th:field="*{price}" id="price" step="1" pattern="\d+"/>
+            <small class="form-text text-muted" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+        </div>
+    </div>
+    <div class="col-sm-offset-2 col-sm-6">
+        <input class="btn btn-success" type="submit" value="Create"/>
+        <input class="btn btn" type="reset" value="Clear"/>
+    </div>
+</form>
+</body>
+</html>
