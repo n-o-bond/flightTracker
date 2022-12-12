@@ -65,7 +65,8 @@ public class FlightController {
 
     @PreAuthorize("isAuthenticated() and authentication.details.id == #userId")
     @GetMapping("/{id}/update/users/{user_id}")
-    public String update(@PathVariable long id, @PathVariable("user_id") long userId, Model model){
+    public String update(@PathVariable long id,
+                         @PathVariable("user_id") long userId, Model model){
         FlightDto flightDto = FlightTransformer.convertToDto(flightService.readById(id));
         model.addAttribute("flight", flightDto);
         model.addAttribute("statuses", FlightStatus.values());
@@ -74,7 +75,8 @@ public class FlightController {
 
     @PreAuthorize("isAuthenticated() and authentication.details.id == #userId")
     @PostMapping("/{id}/update/users/{user_id}")
-    public String update(@PathVariable long id, @PathVariable("user_id") long userId, Model model,
+    public String update(@PathVariable long id,
+                         @PathVariable("user_id") long userId, Model model,
                          @Validated @ModelAttribute("flight") FlightDto flightDto, BindingResult result){
         if(result.hasErrors()){
             flightDto.setOwner_id(userId);
@@ -89,17 +91,22 @@ public class FlightController {
 
     @PreAuthorize("hasAuthority('ADMIN') and authentication.details.id == #userId")
     @GetMapping("/{id}/delete/users/{user_id}")
-    public String delete(@PathVariable long id, @PathVariable("user_id") long userId){
+    public String delete(@PathVariable long id,
+                         @PathVariable("user_id") long userId){
         flightService.delete(id);
         return "redirect:/";
     }
 
     @PreAuthorize("isAnonymous() or isAuthenticated()")
     @GetMapping("/all")
-    public String getAll(Model model, @Param("departure") String departure, @Param("arrival") String arrival){
+    public String getAll(Model model,
+                         @Param("departure") String departure,
+                         @Param("arrival") String arrival){
         model.addAttribute("flights", flightService.getAll(departure, arrival));
+
         model.addAttribute("departure", departure);
         model.addAttribute("arrival", arrival);
+
         return "flights-list";
     }
 
@@ -114,7 +121,8 @@ public class FlightController {
 
     @PreAuthorize("isAuthenticated() and authentication.details.id == #userId")
     @GetMapping("/{id}/add/users/{user_id}")
-    public String addPassenger(@PathVariable long id, @PathVariable("user_id") long userId){
+    public String addPassenger(@PathVariable long id,
+                               @PathVariable("user_id") long userId){
         Flight flight = flightService.readById(id);
         Set<User> passengers = flight.getPassengers();
         passengers.add(userService.readById(userId));
@@ -125,7 +133,8 @@ public class FlightController {
 
     @PreAuthorize("isAuthenticated() and authentication.details.id == #userId")
     @GetMapping("/{id}/remove/users/{user_id}")
-    public String removePassengers(@PathVariable long id, @PathVariable("user_id") long userId){
+    public String removePassengers(@PathVariable long id,
+                                   @PathVariable("user_id") long userId){
 
         Flight flight = flightService.readById(id);
         Set<User> passengers = flight.getPassengers();
