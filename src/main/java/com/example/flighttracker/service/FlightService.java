@@ -11,5 +11,5 @@ public interface FlightService {
     Flight update (Flight flight);
     void delete (long id);
     List<Flight> getByUserId(long userId);
-    List<Flight> getAll();
+    List<Flight> getAll(String departure, String arrival);
 }

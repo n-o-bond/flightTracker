@@ -53,7 +53,10 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<Flight> getAll() {
+    public List<Flight> getAll(String departure, String arrival) {
+        if(departure != null && arrival !=null){
+            return flightRepository.search(departure, arrival);
+        }
         List<Flight> flights = flightRepository.findAll();
         return flights.isEmpty() ? new ArrayList<>() : flights;
     }

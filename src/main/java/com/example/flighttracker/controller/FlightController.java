@@ -7,6 +7,7 @@ import com.example.flighttracker.model.FlightStatus;
 import com.example.flighttracker.model.User;
 import com.example.flighttracker.service.FlightService;
 import com.example.flighttracker.service.UserService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -94,8 +95,10 @@ public class FlightController {
 
     @PreAuthorize("isAnonymous() or isAuthenticated()")
     @GetMapping("/all")
-    public String getAll(Model model){
-        model.addAttribute("flights", flightService.getAll());
+    public String getAll(Model model, @Param("departure") String departure, @Param("arrival") String arrival){
+        model.addAttribute("flights", flightService.getAll(departure, arrival));
+        model.addAttribute("departure", departure);
+        model.addAttribute("arrival", arrival);
         return "flights-list";
     }
 
@@ -114,8 +117,8 @@ public class FlightController {
         boolean selected = false;
         Flight flight = flightService.readById(id);
         List<User> passengers = flight.getPassengers();
-        for (int i = 0; i < passengers.size(); i++) {
-            if (passengers.get(i).equals(userService.readById(userId))) {
+        for (User passenger : passengers) {
+            if (passenger.equals(userService.readById(userId))) {
                 selected = true;
             }
         }
@@ -138,19 +141,5 @@ public class FlightController {
         flightService.update(flight);
         return "redirect:/flights/" + id + "/read";
     }
-
-//    @PreAuthorize("isFullyAuthenticated()")
-//    @GetMapping("/all/search")
-//    public String search(Model model,@ModelAttribute("flight") FlightDto flightDto){
-//        List<Flight> flights = flightService.getAll();
-//        List<Flight> result = new ArrayList<>();
-//        for(int i = 0; i< flights.size(); i++){
-//            if(flights.get(i).getAirport_of_departure().equals(flightDto.getAirport_of_departure())){
-//                result.add(flights.get(i));
-//            }
-//        }
-//        model.addAttribute("result", result);
-//        return "flights-list";
-//    }
 
 }

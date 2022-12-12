@@ -11,20 +11,24 @@
 <div th:replace="header"></div>
 <div class="col-md-offset-2 col-sm-8">
     <br>
-    <h2>List of Flights</h2>
     <form th:action="@{/login-form}" method="get" sec:authorize="isAnonymous()">
         <div align="right">
-            <input class="btn-success btn-lg" type="submit" value="Login">
+            <input class="btn-success btn lg" type="submit" value="Login">
         </div>
     </form>
-<!--    <br>-->
-<!--    <form th:action="@{/flights/all/search}">-->
-<!--        <input type="search" placeholder="Airport of departure" th:value="${flight.airport_of_departure}">-->
-<!--        <input class="col-sm-offset-1" type="search" placeholder="Airport of arrival" th:value="${flight.airport_of_arrival}">-->
-<!--        <input class="col-sm-offset-1 btn-success btn-sm" type="submit" value="Search">-->
-<!--        <a href="/flights/all" class="btn btn-secondary ml-2 d-inline-block" role="button" style="width: 100px;">оновити</a>-->
-<!--    </form>-->
+    <h2>List of Flights</h2>
     <br>
+    <form th:action="@{/flights/all}" method="get">
+        <input style="border: 1px solid #dfe1e5; height: 35px; outline: none;" type="text" placeholder="Airport of departure" name="departure" id="departure" size="35px" th:value="${departure}">
+        <input style="border: 1px solid #dfe1e5; height: 35px; outline: none;" class="col-md-offset-1" type="text" placeholder="Airport of arrival" name="arrival" id="arrival" size="35px" th:value="${arrival}">
+        <input class="col-md-offset-1 btn-success btn-sm" type="submit" value="Search">
+        <input class="btn btn" type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+    </form>
+    <script type="text/javascript">
+        function clearSearch() {
+            window.location = "[[@{/flights/all}]]";
+        }
+    </script>
     <br>
     <table class="table">
         <thead>

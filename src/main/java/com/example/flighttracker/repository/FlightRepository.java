@@ -14,4 +14,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long>{
             "select id, title, airport_of_departure, airport_of_arrival, departure_time, arrived_time, flight_status, price, owner_id from flights inner join flight_passengers on id = flight_id and "+
     "user_id = ?1", nativeQuery = true)
     List<Flight> getByUserId(long userId);
+
+    @Query(value = "select f from Flight f where f.airport_of_departure like %?1% and f.airport_of_arrival like %?2%")
+    List<Flight> search(String departure, String arrival);
 }
