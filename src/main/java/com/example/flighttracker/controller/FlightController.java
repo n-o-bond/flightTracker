@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -105,7 +106,7 @@ public class FlightController {
     @PreAuthorize("isAuthenticated() and authentication.details.id == #userId")
     @GetMapping("/my/users/{user_id}")
     public String getMyFlights(@PathVariable("user_id") long userId, Model model){
-        List<Flight> myFlights = flightService.getByUserId(userId);
+        Set<Flight> myFlights = flightService.getByUserId(userId);
         model.addAttribute("myFlights", myFlights);
         model.addAttribute("user", userService.readById(userId));
         return "my-flights";
@@ -114,17 +115,9 @@ public class FlightController {
     @PreAuthorize("isAuthenticated() and authentication.details.id == #userId")
     @GetMapping("/{id}/add/users/{user_id}")
     public String addPassenger(@PathVariable long id, @PathVariable("user_id") long userId){
-        boolean selected = false;
         Flight flight = flightService.readById(id);
-        List<User> passengers = flight.getPassengers();
-        for (User passenger : passengers) {
-            if (passenger.equals(userService.readById(userId))) {
-                selected = true;
-            }
-        }
-        if(passengers.size() == 0 || !selected){
-            passengers.add(userService.readById(userId));
-        }
+        Set<User> passengers = flight.getPassengers();
+        passengers.add(userService.readById(userId));
         flight.setPassengers(passengers);
         flightService.update(flight);
         return "redirect:/flights/" + id + "/read";
@@ -135,7 +128,7 @@ public class FlightController {
     public String removePassengers(@PathVariable long id, @PathVariable("user_id") long userId){
 
         Flight flight = flightService.readById(id);
-        List<User> passengers = flight.getPassengers();
+        Set<User> passengers = flight.getPassengers();
         passengers.remove(userService.readById(userId));
         flight.setPassengers(passengers);
         flightService.update(flight);

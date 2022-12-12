@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,13 +32,13 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
-    private List<Flight> myFlight;
+    private Set<Flight> myFlight;
 
     @ManyToMany
     @JoinTable(name = "flight_passengers",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "flight_id"))
-    private List<Flight> otherFlight;
+    private Set<Flight> otherFlight;
 
     public User() {
     }
@@ -88,25 +87,24 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public List<Flight> getMyFlight() {
+    public Set<Flight> getMyFlight() {
         return myFlight;
     }
 
-    public void setMyFlight(List<Flight> myFlight) {
+    public void setMyFlight(Set<Flight> myFlight) {
         this.myFlight = myFlight;
     }
-
-    public List<Flight> getOtherFlight() {
+    public Set<Flight> getOtherFlight() {
         return otherFlight;
     }
 
-    public void setOtherFlight(List<Flight> otherFlight) {
+    public void setOtherFlight(Set<Flight> otherFlight) {
         this.otherFlight = otherFlight;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> grantedAuthoritySet =new HashSet<>();
+        Set<GrantedAuthority> grantedAuthoritySet = new HashSet<>();
         grantedAuthoritySet.add(role);
         return grantedAuthoritySet;
     }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -46,5 +46,5 @@ public class FlightDto {
     long owner_id;
 
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    List<User> passengers;
+    Set<User> passengers;
 }

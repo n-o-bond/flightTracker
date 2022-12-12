@@ -4,7 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "flights")
@@ -42,11 +42,11 @@ public class Flight {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "flight_passengers",
             joinColumns = @JoinColumn(name = "flight_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> passengers;
+    private Set<User> passengers;
 
     public Flight() {
     }
@@ -83,9 +83,6 @@ public class Flight {
         this.airport_of_arrival = airport_of_arrival;
     }
 
-    public String getCountries(String country_of_departure, String country_of_arrival){
-        return country_of_departure + " - " + country_of_arrival;
-    }
     public LocalDateTime getDeparture_time() {
         return departure_time;
     }
@@ -126,11 +123,11 @@ public class Flight {
         this.owner = owner;
     }
 
-    public List<User> getPassengers() {
+    public Set<User> getPassengers() {
         return passengers;
     }
 
-    public void setPassengers(List<User> passengers) {
+    public void setPassengers(Set<User> passengers) {
         this.passengers = passengers;
     }
 

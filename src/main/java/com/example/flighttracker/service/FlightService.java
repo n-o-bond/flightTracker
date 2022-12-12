@@ -3,6 +3,7 @@ package com.example.flighttracker.service;
 import com.example.flighttracker.model.Flight;
 
 import java.util.List;
+import java.util.Set;
 
 public interface FlightService {
 
@@ -10,6 +11,6 @@ public interface FlightService {
     Flight readById (long id);
     Flight update (Flight flight);
     void delete (long id);
-    List<Flight> getByUserId(long userId);
+    Set<Flight> getByUserId(long userId);
     List<Flight> getAll(String departure, String arrival);
 }
