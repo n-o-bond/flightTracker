@@ -11,13 +11,24 @@
 <div th:replace="header"></div>
 <div class="col-md-offset-2 col-sm-8">
     <br>
-    <h2>List of Flights</h2>
     <form th:action="@{/login-form}" method="get" sec:authorize="isAnonymous()">
         <div align="right">
-            <input class="btn-success btn-lg" type="submit" value="Login">
+            <input class="btn-success btn lg" type="submit" value="Login">
         </div>
     </form>
+    <h2>List of Flights</h2>
     <br>
+    <form th:action="@{/flights/all}" method="get">
+        <input style="border: 1px solid #dfe1e5; height: 35px; outline: none;" type="text" placeholder="Airport of departure" name="departure" id="departure" size="35px" th:value="${departure}">
+        <input style="border: 1px solid #dfe1e5; height: 35px; outline: none;" class="col-md-offset-1" type="text" placeholder="Airport of arrival" name="arrival" id="arrival" size="35px" th:value="${arrival}">
+        <input class="col-md-offset-1 btn-success btn-sm" type="submit" value="Search">
+        <input class="btn btn" type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+    </form>
+    <script type="text/javascript">
+        function clearSearch() {
+            window.location = "[[@{/flights/all}]]";
+        }
+    </script>
     <br>
     <table class="table">
         <thead>
@@ -39,10 +50,10 @@
             <th scope="row" th:text="${i.index + 1}"></th>
             <td th:text="${flight.id}"></td>
             <td th:text="${flight.title}"></td>
-            <td th:text="${flight.airport_of_departure}"></td>
-            <td th:text="${flight.airport_of_arrival}"></td>
-            <td th:text="${#temporals.format(flight.departure_time, 'dd.MM.yyyy HH:mm')}"></td>
-            <td th:text="${#temporals.format(flight.arrived_time, 'dd.MM.yyyy HH:mm')}"></td>
+            <td th:text="${flight.airportOfDeparture}"></td>
+            <td th:text="${flight.airportOfArrival}"></td>
+            <td th:text="${#temporals.format(flight.departureTime, 'dd.MM.yyyy HH:mm')}"></td>
+            <td th:text="${#temporals.format(flight.arrivedTime, 'dd.MM.yyyy HH:mm')}"></td>
             <td th:text="${flight.flightStatus.name().substring(0,1) + flight.flightStatus.name().substring(1).toLowerCase()}"></td>
             <td th:text="${flight.price}"></td>
             <td>

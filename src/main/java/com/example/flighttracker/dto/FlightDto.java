@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -25,26 +25,26 @@ public class FlightDto {
     @Pattern(regexp = "[A-Z][a-z]+",
             message = "Must start with a capital letter followed by one or more lowercase letters")
     @NotBlank
-    String airport_of_departure;
+    String airportOfDeparture;
 
     @Pattern(regexp = "[A-Z][a-z]+",
             message = "Must start with a capital letter followed by one or more lowercase letters")
     @NotBlank
-    String airport_of_arrival;
+    String airportOfArrival;
 
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    LocalDateTime departure_time;
+    LocalDateTime departureTime;
 
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    LocalDateTime arrived_time;
+    LocalDateTime arrivedTime;
 
     String flightStatus;
 
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     int price;
 
-    long owner_id;
+    long ownerId;
 
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    List<User> passengers;
+    Set<User> passengers;
 }

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class FlightServiceImpl implements FlightService {
@@ -47,13 +49,16 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<Flight> getByUserId(long userId) {
-        List<Flight> flights = flightRepository.getByUserId(userId);
-        return flights.isEmpty() ? new ArrayList<>() : flights;
+    public Set<Flight> getByUserId(long userId) {
+        Set<Flight> flights = flightRepository.getByUserId(userId);
+        return flights.isEmpty() ? new HashSet<>() : flights;
     }
 
     @Override
-    public List<Flight> getAll() {
+    public List<Flight> getAll(String departure, String arrival) {
+        if(departure != null && arrival !=null){
+            return flightRepository.search(departure, arrival);
+        }
         List<Flight> flights = flightRepository.findAll();
         return flights.isEmpty() ? new ArrayList<>() : flights;
     }

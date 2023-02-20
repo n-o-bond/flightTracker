@@ -28,25 +28,25 @@
             <tr>
                 <td>Airport of departure:</td>
                 <td>
-                    <b th:text="${flight.airport_of_departure}"></b>
+                    <b th:text="${flight.airportOfDeparture}"></b>
                 </td>
             </tr>
             <tr>
                 <td>Airport of arrival:</td>
                 <td>
-                    <b th:text="${flight.airport_of_arrival}"></b>
+                    <b th:text="${flight.airportOfArrival}"></b>
                 </td>
             </tr>
             <tr>
                 <td>Departure time:</td>
                 <td>
-                    <b th:text="${#temporals.format(flight.departure_time, 'dd.MM.yyyy HH:mm')}"></b>
+                    <b th:text="${#temporals.format(flight.departureTime, 'dd.MM.yyyy HH:mm')}"></b>
                 </td>
             </tr>
             <tr>
                 <td>Arrived time:</td>
                 <td>
-                    <b th:text="${#temporals.format(flight.arrived_time, 'dd.MM.yyyy HH:mm')}"></b>
+                    <b th:text="${#temporals.format(flight.arrivedTime, 'dd.MM.yyyy HH:mm')}"></b>
                 </td>
             </tr>
             <tr>

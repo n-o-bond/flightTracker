@@ -28,12 +28,13 @@ public class UserDto {
 
     @Email(message = "Must be a valid e-mail address")
     @NotBlank
-    String login;
+    String email;
 
+    @NotBlank
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    long role_id;
+    long roleId;
 
 }

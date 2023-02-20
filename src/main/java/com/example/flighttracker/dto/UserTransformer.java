@@ -17,8 +17,8 @@ public class UserTransformer {
         userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
-        userDto.setLogin(user.getLogin());
-        userDto.setRole_id(user.getRole().getId());
+        userDto.setEmail(user.getEmail());
+        userDto.setRoleId(user.getRole().getId());
 
         return userDto;
     }
@@ -33,7 +33,7 @@ public class UserTransformer {
         user.setId(userDto.getId());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
-        user.setLogin(userDto.getLogin());
+        user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
         user.setRole(role);
 

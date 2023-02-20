@@ -43,9 +43,9 @@ public class UserController {
         if(result.hasErrors()){
             return "create-user";
         }
-        userDto.setRole_id(2);
+        userDto.setRoleId(2);
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        User user = UserTransformer.convertToEntity(userDto, roleService.readById(userDto.getRole_id()));
+        User user = UserTransformer.convertToEntity(userDto, roleService.readById(userDto.getRoleId()));
         userService.create(user);
         return "redirect:/users/" + user.getId() + "/read";
     }
@@ -74,12 +74,12 @@ public class UserController {
                          @RequestParam("role_id") long roleId, BindingResult result){
         User oldUser = userService.readById(id);
         if(result.hasErrors()){
-            userDto.setRole_id(oldUser.getRole().getId());
+            userDto.setRoleId(oldUser.getRole().getId());
             model.addAttribute("roles", roleService.getAll());
             return "update-user";
         }
-        userDto.setRole_id(roleId);
-        User user = UserTransformer.convertToEntity(userDto, roleService.readById(userDto.getRole_id()));
+        userDto.setRoleId(roleId);
+        User user = UserTransformer.convertToEntity(userDto, roleService.readById(userDto.getRoleId()));
         userService.update(user);
         return "redirect:/home";
     }
