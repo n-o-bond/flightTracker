@@ -25,25 +25,25 @@ public class FlightDto {
     @Pattern(regexp = "[A-Z][a-z]+",
             message = "Must start with a capital letter followed by one or more lowercase letters")
     @NotBlank
-    String airport_of_departure;
+    String airportOfDeparture;
 
     @Pattern(regexp = "[A-Z][a-z]+",
             message = "Must start with a capital letter followed by one or more lowercase letters")
     @NotBlank
-    String airport_of_arrival;
+    String airportOfArrival;
 
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    LocalDateTime departure_time;
+    LocalDateTime departureTime;
 
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    LocalDateTime arrived_time;
+    LocalDateTime arrivedTime;
 
     String flightStatus;
 
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     int price;
 
-    long owner_id;
+    long ownerId;
 
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     Set<User> passengers;

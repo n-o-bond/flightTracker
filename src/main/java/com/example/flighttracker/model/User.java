@@ -1,5 +1,9 @@
 package com.example.flighttracker.model;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,6 +12,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -32,75 +40,13 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
-    private Set<Flight> myFlight;
+    private Set<Flight> myFlights;
 
     @ManyToMany
     @JoinTable(name = "flight_passengers",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "flight_id"))
     private Set<Flight> otherFlight;
-
-    public User() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getLogin() {
-        return email;
-    }
-
-    public void setLogin(String login) {
-        this.email = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Set<Flight> getMyFlight() {
-        return myFlight;
-    }
-
-    public void setMyFlight(Set<Flight> myFlight) {
-        this.myFlight = myFlight;
-    }
-    public Set<Flight> getOtherFlight() {
-        return otherFlight;
-    }
-
-    public void setOtherFlight(Set<Flight> otherFlight) {
-        this.otherFlight = otherFlight;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -16,6 +16,6 @@ public interface FlightRepository extends JpaRepository<Flight, Long>{
     "user_id = ?1", nativeQuery = true)
     Set<Flight> getByUserId(long userId);
 
-    @Query(value = "select f from Flight f where f.airport_of_departure like %?1% and f.airport_of_arrival like %?2%")
+    @Query(value = "select f from Flight f where f.airportOfDeparture like %?1% and f.airportOfArrival like %?2%")
     List<Flight> search(String departure, String arrival);
 }

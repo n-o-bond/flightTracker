@@ -37,8 +37,8 @@
     <div class="form-group">
         <label class="col-sm-2 control-label" for="login">E-mail:</label>
         <div class="col-sm-8">
-            <input type="email" class="form-control" th:field="*{login}" id="login"/>
-            <small class="form-text text-muted" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></small>
+            <input type="email" class="form-control" th:field="*{email}" id="login"/>
+            <small class="form-text text-muted" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
         </div>
     </div>
     <div class="form-group">
@@ -57,12 +57,12 @@
     <div class="form-group" sec:authorize="hasAuthority('ADMIN')">
         <label class="col-sm-2 control-label" for="role">Role:</label>
         <div class="col-sm-8">
-            <select class="form-control" name="roleId" id="role" th:number="${user.role_id}">
+            <select class="form-control" name="roleId" id="role" th:number="${user.roleId}">
                 <span th:each="role : ${roles}">
-                    <option th:if="${role.id == user.role_id}" th:selected="${true}" th:text="${role.name.substring(0,1)
+                    <option th:if="${role.id == user.roleId}" th:selected="${true}" th:text="${role.name.substring(0,1)
                     + role.name.substring(1).toLowerCase()}" th:value="${role.id}"/>
-                    <option  th:text="${role.name.substring(0,1) + role.name.substring(1).toLowerCase()}"
-                             th:unless="${role.id == user.role_id}" th:value="${role.id}"/>
+                    <option th:text="${role.name.substring(0,1) + role.name.substring(1).toLowerCase()}"
+                            th:unless="${role.id == user.roleId}" th:value="${role.id}"/>
                 </span>
             </select>
         </div>
@@ -71,7 +71,7 @@
         <input class="btn btn-success" type="submit" value="Update"/>
         <input class="btn btn" type="reset" value="Clear"/>
         <input name="id" th:value="*{id}" type="hidden"/>
-        <input name="role_id" th:value="*{role_id}" type="hidden"/>
+        <input name="role_id" th:value="*{roleId}" type="hidden"/>
     </div>
 </form>
 </div>

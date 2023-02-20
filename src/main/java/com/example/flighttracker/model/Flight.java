@@ -1,11 +1,19 @@
 package com.example.flighttracker.model;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "flights")
 public class Flight {
@@ -18,18 +26,18 @@ public class Flight {
     private String title;
 
     @Column(name = "airport_of_departure", nullable = false)
-    private String airport_of_departure;
+    private String airportOfDeparture;
 
     @Column(name = "airport_of_arrival", nullable = false)
-    private String airport_of_arrival;
+    private String airportOfArrival;
 
     @Column(name = "departure_time", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDateTime departure_time;
+    private LocalDateTime departureTime;
 
     @Column(name = "arrived_time", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDateTime arrived_time;
+    private LocalDateTime arrivedTime;
 
     @Column(name = "flight_status")
     @Enumerated(EnumType.STRING)
@@ -48,98 +56,15 @@ public class Flight {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> passengers;
 
-    public Flight() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAirport_of_departure() {
-        return airport_of_departure;
-    }
-
-    public void setAirport_of_departure(String airport_of_departure) {
-        this.airport_of_departure = airport_of_departure;
-    }
-
-    public String getAirport_of_arrival() {
-        return airport_of_arrival;
-    }
-
-    public void setAirport_of_arrival(String airport_of_arrival) {
-        this.airport_of_arrival = airport_of_arrival;
-    }
-
-    public LocalDateTime getDeparture_time() {
-        return departure_time;
-    }
-
-    public void setDeparture_time(LocalDateTime departure_time) {
-        this.departure_time = departure_time;
-    }
-
-    public LocalDateTime getArrived_time() {
-        return arrived_time;
-    }
-
-    public void setArrived_time(LocalDateTime arrived_time) {
-        this.arrived_time = arrived_time;
-    }
-
-    public FlightStatus getFlightStatus() {
-        return flightStatus;
-    }
-
-    public void setFlightStatus(FlightStatus flightStatus) {
-        this.flightStatus = flightStatus;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public Set<User> getPassengers() {
-        return passengers;
-    }
-
-    public void setPassengers(Set<User> passengers) {
-        this.passengers = passengers;
-    }
-
     @Override
     public String toString() {
         return "Flight{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", airport_of_departure='" + airport_of_departure + '\'' +
-                ", airport_of_arrival='" + airport_of_arrival + '\'' +
-                ", departure_time=" + departure_time +
-                ", arrived_time=" + arrived_time +
+                ", airport_of_departure='" + airportOfDeparture + '\'' +
+                ", airport_of_arrival='" + airportOfArrival + '\'' +
+                ", departure_time=" + departureTime +
+                ", arrived_time=" + arrivedTime +
                 ", flightStatus=" + flightStatus +
                 '}';
     }

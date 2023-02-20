@@ -26,7 +26,7 @@
             <th scope="row" th:text="${i.index + 1}"></th>
             <td th:text="${user.id}"></td>
             <td th:text="${user.firstName + ' ' + user.lastName}"></td>
-            <td th:text="${user.login}"></td>
+            <td th:text="${user.email}"></td>
             <td th:text="${user.role.name.substring(0,1) + user.role.name.substring(1).toLowerCase()}"></td>
             <td>
                 <a th:href="@{|/users/${user.id}/update|}">Edit</a>

@@ -57,7 +57,7 @@ public class FlightController {
     @GetMapping("/{id}/read")
     public String read(@PathVariable long id, Model model){
         FlightDto flightDto = FlightTransformer.convertToDto(flightService.readById(id));
-        List<User> passengers = userService.getAll().stream().filter(user -> user.getId() != flightDto.getOwner_id()).collect(Collectors.toList());
+        List<User> passengers = userService.getAll().stream().filter(user -> user.getId() != flightDto.getOwnerId()).collect(Collectors.toList());
         model.addAttribute("flight", flightDto);
         model.addAttribute("passengers", passengers);
         return "flight-info";
@@ -79,7 +79,7 @@ public class FlightController {
                          @PathVariable("user_id") long userId, Model model,
                          @Validated @ModelAttribute("flight") FlightDto flightDto, BindingResult result){
         if(result.hasErrors()){
-            flightDto.setOwner_id(userId);
+            flightDto.setOwnerId(userId);
             model.addAttribute("statuses", FlightStatus.values());
             return "update-flight";
         }
