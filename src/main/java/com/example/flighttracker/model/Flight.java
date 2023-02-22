@@ -1,13 +1,12 @@
 package com.example.flighttracker.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -44,17 +43,28 @@ public class Flight {
     private FlightStatus flightStatus;
 
     @Column(name = "price", nullable = false)
-    private int price;
+    private BigDecimal price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
 
+    @Setter(AccessLevel.PRIVATE)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "flight_passengers",
             joinColumns = @JoinColumn(name = "flight_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> passengers;
+    private Set<User> passengers = new HashSet<>();
+
+    public void addPassenger(User user){
+        passengers.add(user);
+        user.getMyFlights().add(this);
+    }
+
+    public void removePassenger(User user){
+        passengers.remove(user);
+        user.getMyFlights().remove(this);
+    }
 
     @Override
     public String toString() {

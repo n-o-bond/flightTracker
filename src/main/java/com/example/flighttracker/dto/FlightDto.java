@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -32,19 +33,17 @@ public class FlightDto {
     @NotBlank
     String airportOfArrival;
 
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     LocalDateTime departureTime;
 
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     LocalDateTime arrivedTime;
 
+    @NotBlank
     String flightStatus;
 
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    int price;
+    BigDecimal price;
 
     long ownerId;
 
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     Set<User> passengers;
 }

@@ -45,7 +45,6 @@ public class FlightTransformer {
         flight.setFlightStatus(FlightStatus.valueOf(flightDto.getFlightStatus()));
         flight.setPrice(flightDto.getPrice());
         flight.setOwner(user);
-        flight.setPassengers(flightDto.getPassengers());
 
         return flight;
     }

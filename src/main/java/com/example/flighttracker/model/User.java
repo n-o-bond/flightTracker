@@ -1,9 +1,6 @@
 package com.example.flighttracker.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -35,18 +32,41 @@ public class User implements UserDetails {
 
     @Column(name = "password", nullable = false)
     private String password;
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
-    private Set<Flight> myFlights;
+    private Set<Flight> myFlights = new HashSet<>();
 
+    @Setter(AccessLevel.PRIVATE)
     @ManyToMany
     @JoinTable(name = "flight_passengers",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "flight_id"))
-    private Set<Flight> otherFlight;
+    private Set<Flight> otherFlights = new HashSet<>();
+
+    public void addMyFlight(Flight flight){
+        myFlights.add(flight);
+        flight.setOwner(this);
+    }
+
+    public void removeMyFlight(Flight flight){
+        myFlights.remove(flight);
+        flight.setOwner(null);
+    }
+
+    public void addOtherFlight(Flight flight){
+        otherFlights.add(flight);
+        flight.getPassengers().add(this);
+    }
+
+    public void removeOtherFlight(Flight flight){
+        otherFlights.remove(flight);
+        flight.getPassengers().remove(this);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

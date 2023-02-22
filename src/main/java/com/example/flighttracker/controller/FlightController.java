@@ -103,10 +103,8 @@ public class FlightController {
                          @Param("departure") String departure,
                          @Param("arrival") String arrival){
         model.addAttribute("flights", flightService.getAll(departure, arrival));
-
         model.addAttribute("departure", departure);
         model.addAttribute("arrival", arrival);
-
         return "flights-list";
     }
 
@@ -124,9 +122,7 @@ public class FlightController {
     public String addPassenger(@PathVariable long id,
                                @PathVariable("user_id") long userId){
         Flight flight = flightService.readById(id);
-        Set<User> passengers = flight.getPassengers();
-        passengers.add(userService.readById(userId));
-        flight.setPassengers(passengers);
+        flight.addPassenger(userService.readById(userId));
         flightService.update(flight);
         return "redirect:/flights/" + id + "/read";
     }
@@ -137,9 +133,7 @@ public class FlightController {
                                    @PathVariable("user_id") long userId){
 
         Flight flight = flightService.readById(id);
-        Set<User> passengers = flight.getPassengers();
-        passengers.remove(userService.readById(userId));
-        flight.setPassengers(passengers);
+        flight.removePassenger(userService.readById(userId));
         flightService.update(flight);
         return "redirect:/flights/" + id + "/read";
     }
