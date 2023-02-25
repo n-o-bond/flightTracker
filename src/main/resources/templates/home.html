@@ -13,7 +13,7 @@
     <div class="page-header" align="center">
         <h2>Welcome to Flight Tracker Application</h2>
         <br><br>
-        <form th:action="@{/flights/create/users/{id}(id = ${#authentication.details.id})}" method="get">
+        <form th:action="@{|/flights/create/users/${#authentication.principal.id}|}" method="get">
             <div align="center" sec:authorize="hasAuthority('ADMIN')">
                 <input class="btn-success btn-lg" type="submit" value="Create new Flight">
             </div>

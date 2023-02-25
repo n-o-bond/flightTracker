@@ -63,21 +63,21 @@
             </tr>
         </table>
         <div sec:authorize="hasAuthority('ADMIN')">
-            <a th:href="@{|/flights/${flight.id}/update/users/${#authentication.details.id}|}">Edit</a>
-            <a th:href="@{|/flights/${flight.id}/delete/users/${#authentication.details.id}|}">Remove</a>
+            <a th:href="@{|/flights/${flight.id}/update/users/${#authentication.principal.id}|}">Edit</a>
+            <a th:href="@{|/flights/${flight.id}/delete/users/${#authentication.principal.id}|}">Remove</a>
         </div>
     </div>
 
     <div align="center">
         <div style="display: inline-flex">
-            <form class="form-horizontal" th:action="@{|/flights/${flight.id}/add/users/${#authentication.details.id}|}"
+            <form class="form-horizontal" th:action="@{|/flights/${flight.id}/add/users/${#authentication.principal.id}|}"
                   method="get">
                 <input class="btn-success btn-sm" type="submit" value="Add to My Flights">
             </form>
         </div>
         <div style="display: inline-flex">
             <form class="form-horizontal"
-                  th:action="@{|/flights/${flight.id}/remove/users/${#authentication.details.id}|}" method="get">
+                  th:action="@{|/flights/${flight.id}/remove/users/${#authentication.principal.id}|}" method="get">
                 <input class="btn-success btn-sm" type="submit" value="Remove with My Flights">
             </form>
         </div>
@@ -94,7 +94,7 @@
     </table>
     <div class="col-sm-offset-2 col-sm-8">
         <input name="id" th:value="*{flight.id}" type="hidden"/>
-        <input name="user_id" th:value="${#authentication.details.id}" type="hidden">
+        <input name="user_id" th:value="${#authentication.principal.id}" type="hidden">
     </div>
 
 </div>

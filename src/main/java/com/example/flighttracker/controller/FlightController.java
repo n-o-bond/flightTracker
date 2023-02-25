@@ -31,7 +31,7 @@ public class FlightController {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') and authentication.details.id == #userId")
+    @PreAuthorize("hasAuthority('ADMIN') and authentication.principal.id == #userId")
     @GetMapping("/create/users/{user_id}")
     public String create(@PathVariable("user_id") long userId, Model model){
         model.addAttribute("flight", new FlightDto());
@@ -39,7 +39,7 @@ public class FlightController {
         return "create-flight";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') and authentication.details.id == #userId")
+    @PreAuthorize("hasAuthority('ADMIN') and authentication.principal.id == #userId")
     @PostMapping("/create/users/{user_id}")
     public String create(@PathVariable("user_id") long userId, Model model,
                          @Validated @ModelAttribute("flight") FlightDto flightDto, BindingResult result){
@@ -63,7 +63,7 @@ public class FlightController {
         return "flight-info";
     }
 
-    @PreAuthorize("isAuthenticated() and authentication.details.id == #userId")
+    @PreAuthorize("isAuthenticated() and authentication.principal.id == #userId")
     @GetMapping("/{id}/update/users/{user_id}")
     public String update(@PathVariable long id,
                          @PathVariable("user_id") long userId, Model model){
@@ -73,7 +73,7 @@ public class FlightController {
         return "update-flight";
     }
 
-    @PreAuthorize("isAuthenticated() and authentication.details.id == #userId")
+    @PreAuthorize("isAuthenticated() and authentication.principal.id == #userId")
     @PostMapping("/{id}/update/users/{user_id}")
     public String update(@PathVariable long id,
                          @PathVariable("user_id") long userId, Model model,
@@ -89,7 +89,7 @@ public class FlightController {
         return "redirect:/flights/" + id + "/read";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') and authentication.details.id == #userId")
+    @PreAuthorize("hasAuthority('ADMIN') and authentication.principal.id == #userId")
     @GetMapping("/{id}/delete/users/{user_id}")
     public String delete(@PathVariable long id,
                          @PathVariable("user_id") long userId){
@@ -108,7 +108,7 @@ public class FlightController {
         return "flights-list";
     }
 
-    @PreAuthorize("isAuthenticated() and authentication.details.id == #userId")
+    @PreAuthorize("isAuthenticated() and authentication.principal.id == #userId")
     @GetMapping("/my/users/{user_id}")
     public String getMyFlights(@PathVariable("user_id") long userId, Model model){
         Set<Flight> myFlights = flightService.getByUserId(userId);
@@ -117,7 +117,7 @@ public class FlightController {
         return "my-flights";
     }
 
-    @PreAuthorize("isAuthenticated() and authentication.details.id == #userId")
+    @PreAuthorize("isAuthenticated() and authentication.principal.id == #userId")
     @GetMapping("/{id}/add/users/{user_id}")
     public String addPassenger(@PathVariable long id,
                                @PathVariable("user_id") long userId){
@@ -127,7 +127,7 @@ public class FlightController {
         return "redirect:/flights/" + id + "/read";
     }
 
-    @PreAuthorize("isAuthenticated() and authentication.details.id == #userId")
+    @PreAuthorize("isAuthenticated() and authentication.principal.id == #userId")
     @GetMapping("/{id}/remove/users/{user_id}")
     public String removePassengers(@PathVariable long id,
                                    @PathVariable("user_id") long userId){

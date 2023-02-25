@@ -10,7 +10,7 @@
 <div class="col-md-offset-2">
     <h2>Create New Flight</h2>
 </div>
-<form class="form-horizontal" th:action="@{/flights/create/users/{user_id}(user_id = ${#authentication.details.id})}" th:object="${flight}" method="post">
+<form class="form-horizontal" th:action="@{|/flights/create/users/${#authentication.principal.id}|}" th:object="${flight}" method="post">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="title">Title:</label>
         <div class="col-sm-8">

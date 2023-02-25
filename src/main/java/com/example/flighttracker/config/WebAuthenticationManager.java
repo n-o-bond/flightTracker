@@ -1,6 +1,5 @@
 package com.example.flighttracker.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,8 +12,11 @@ import java.util.List;
 @Component
 public class WebAuthenticationManager implements AuthenticationManager {
 
-    @Autowired
-    List<AuthenticationProvider> authenticationProviders;
+    final List<AuthenticationProvider> authenticationProviders;
+
+    public WebAuthenticationManager(List<AuthenticationProvider> authenticationProviders) {
+        this.authenticationProviders = authenticationProviders;
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

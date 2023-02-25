@@ -1,12 +1,12 @@
 package com.example.flighttracker.controller;
 
-import com.example.flighttracker.config.WebAuthenticationToken;
 import com.example.flighttracker.dto.UserDto;
 import com.example.flighttracker.dto.UserTransformer;
 import com.example.flighttracker.model.User;
 import com.example.flighttracker.service.RoleService;
 import com.example.flighttracker.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -50,7 +50,7 @@ public class UserController {
         return "redirect:/users/" + user.getId() + "/read";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.details.id == #id")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.principal.id == #id")
     @GetMapping("/{id}/read")
     public String read(@PathVariable long id, Model model){
         UserDto userDto = UserTransformer.convertToDto(userService.readById(id));
@@ -58,7 +58,7 @@ public class UserController {
         return "user-info";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.details.id == #id")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.principal.id == #id")
     @GetMapping("/{id}/update")
     public String update(@PathVariable long id, Model model){
         UserDto userDto = UserTransformer.convertToDto(userService.readById(id));
@@ -67,7 +67,7 @@ public class UserController {
         return "update-user";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.details.id == #id")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.principal.id == #id")
     @PostMapping("/{id}/update")
     public String update(@PathVariable long id, Model model,
                          @Validated @ModelAttribute("user") UserDto userDto,
@@ -84,11 +84,11 @@ public class UserController {
         return "redirect:/home";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.details.id == #id")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.principal.id == #id")
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable long id){
-        WebAuthenticationToken authenticationToken = (WebAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        if(((User) authenticationToken.getDetails()).getId() == id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(((User) authentication.getPrincipal()).getId() == id){
             userService.delete(id);
             SecurityContextHolder.clearContext();
             return "redirect:/login-form";
