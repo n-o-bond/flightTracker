@@ -26,7 +26,7 @@ public class FlightServiceImpl implements FlightService {
         if (flight != null){
             return flightRepository.save(flight);
         }
-        throw new NullEntityReferenceException("Flight cannot be 'null");
+        throw new NullEntityReferenceException("Flight cannot be 'null'");
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FlightServiceImpl implements FlightService {
             readById(flight.getId());
             return flightRepository.save(flight);
         }
-        throw new NullEntityReferenceException("Flight cannot be 'null");
+        throw new NullEntityReferenceException("Flight cannot be 'null'");
     }
 
     @Override

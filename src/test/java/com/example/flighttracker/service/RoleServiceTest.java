@@ -37,7 +37,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void createRoleTest() {
+    public void createValidRole() {
         when(roleRepository.save(any(Role.class))).thenReturn(role);
 
         Role actual = roleService.create(role);
@@ -46,14 +46,14 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void createNullRoleTest() {
+    public void createRoleIsNull() {
         Exception exception = assertThrows(NullEntityReferenceException.class, () -> roleService.create(null));
         assertTrue(exception.getMessage().contains("Role cannot be 'null'"));
         verify(roleRepository, times(0)).save(any(Role.class));
     }
 
     @Test
-    public void readByRoleIdTest() {
+    public void readByRoleId() {
         when(roleRepository.findById(anyLong())).thenReturn(Optional.of(role));
 
         Role actual = roleService.readById(role.getId());
@@ -62,7 +62,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void readByInvalidRoleIdTest() {
+    public void readByIdInvalidRoleId() {
         when(roleRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         long notFoundId = 10L;
@@ -71,7 +71,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void updateRoleTest() {
+    public void updateExistingRole() {
         when(roleRepository.findById(anyLong())).thenReturn(Optional.of(role));
         when(roleRepository.save(any(Role.class))).thenReturn(role);
 
@@ -88,14 +88,14 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void updateNullRoleTest() {
+    public void updateRoleIsNull() {
         Exception exception = assertThrows(NullEntityReferenceException.class, () -> roleService.update(null));
         assertTrue(exception.getMessage().contains("Role cannot be 'null'"));
         verify(roleRepository, times(0)).save(any(Role.class));
     }
 
     @Test
-    public void deleteRoleTest() {
+    public void deleteExistingRole() {
         when(roleRepository.findById(anyLong())).thenReturn(Optional.of(role));
 
         roleService.delete(role.getId());
@@ -103,7 +103,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void deleteEmptyRoleTest() {
+    public void deleteInvalidRole() {
         when(roleRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         long notFoundId = 10L;
@@ -112,7 +112,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void getAllRolesTest() {
+    public void getAllRoles() {
         var expected = new ArrayList<Role>();
 
         when(roleRepository.findAll()).thenReturn(expected);

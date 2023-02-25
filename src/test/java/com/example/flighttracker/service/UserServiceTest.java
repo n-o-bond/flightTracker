@@ -42,7 +42,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createUserTest() {
+    public void createValidUser() {
         when(userRepository.save(any(User.class))).thenReturn(user);
 
         User actual = userService.create(user);
@@ -51,14 +51,14 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createNullUserTest() {
+    public void createUserIsNull() {
         Exception exception = assertThrows(NullEntityReferenceException.class, () -> userService.create(null));
         assertTrue(exception.getMessage().contains("User cannot be 'null'"));
         verify(userRepository, times(0)).save(any(User.class));
     }
 
     @Test
-    public void readByIdUserTest() {
+    public void readByIdUser() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
 
         User actual = userService.readById(user.getId());
@@ -67,7 +67,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void readByInvalidIdUserTest() {
+    public void readByIdInvalidUserId() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         long notFoundId = 10L;
@@ -77,7 +77,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void updateUserTest() {
+    public void updateExistingUser() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(userRepository.save(any(User.class))).thenReturn(user);
 
@@ -88,13 +88,13 @@ public class UserServiceTest {
     }
 
     @Test
-    public void updateNonExistingUserTest(){
+    public void updateNonExistingUser(){
         assertThrows(EntityNotFoundException.class, () -> userService.update(user));
         verify(userRepository, times(0)).save(any(User.class));
     }
 
     @Test
-    public void updateNullUserTest() {
+    public void updateUserIsNull() {
         Exception exception = assertThrows(NullEntityReferenceException.class, () -> userService.update(null));
         assertTrue(exception.getMessage().contains("User cannot be 'null'"));
         verify(userRepository, times(0)).save(any(User.class));
@@ -102,7 +102,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void deleteUserTest() {
+    public void deleteExistingUser() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
 
         userService.delete(user.getId());
@@ -110,7 +110,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void deleteInvalidUserTest() {
+    public void deleteInvalidUser() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         long notFoundId = 10L;
@@ -120,7 +120,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getAllUsersTest() {
+    public void getAllUsers() {
         var expected = new ArrayList<User>();
 
         when(userRepository.findAll()).thenReturn(expected);
