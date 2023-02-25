@@ -24,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
         if (role != null){
             return roleRepository.save(role);
         }
-        throw new NullEntityReferenceException("Role cannot be 'null");
+        throw new NullEntityReferenceException("Role cannot be 'null'");
     }
 
     @Override
