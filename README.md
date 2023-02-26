@@ -5,20 +5,20 @@ This is the simple flight timetable implemented with Spring Boot. The applicatio
 ⚡ Here is the list of features:
 
 User management
-* Register a new account
-* View account details
-* Update account
-* Delete account 
-* Add the flight to my flights' list
+1. [x] Register a new account
+2. [x] View account details
+3. [x] Update account
+4. [x] Delete account
+5. [x] Add the flight to my flights' list
 
 Session management
-* Login
-* Logout 
+1. [x] Login
+2. [x] Logout 
 
 FlightTracker management
-* CRUD operations on flights 
-* Search flights via the airport in the list
-* Add a passenger (you) to the flight
+1. [x] CRUD operations on flights
+2. [x] Search flights via the airport in the list
+3. [x] Add a passenger (you) to the flight
 
 🚀 Build and run FlightTracker
 - Clone this project
