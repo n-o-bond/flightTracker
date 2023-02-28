@@ -35,6 +35,7 @@ FlightTracker management
 * Spring MVC
 * Spring Security
 * PostgreSQL
+* SQL
 * JDBC
 * Hibernate ORM
 * Lombok
