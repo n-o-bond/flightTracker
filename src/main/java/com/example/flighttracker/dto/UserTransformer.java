@@ -18,6 +18,7 @@ public class UserTransformer {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setEmail(user.getEmail());
+        userDto.setPassword(user.getPassword());
         userDto.setRoleId(user.getRole().getId());
 
         return userDto;

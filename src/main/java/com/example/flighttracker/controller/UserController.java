@@ -47,7 +47,7 @@ public class UserController {
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = UserTransformer.convertToEntity(userDto, roleService.readById(userDto.getRoleId()));
         userService.create(user);
-        return "redirect:/users/" + user.getId() + "/read";
+        return "redirect:/home";
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.principal.id == #id")
@@ -71,17 +71,14 @@ public class UserController {
     @PostMapping("/{id}/update")
     public String update(@PathVariable long id, Model model,
                          @Validated @ModelAttribute("user") UserDto userDto,
-                         @RequestParam("role_id") long roleId, BindingResult result){
-        User oldUser = userService.readById(id);
+                         BindingResult result){
         if(result.hasErrors()){
-            userDto.setRoleId(oldUser.getRole().getId());
             model.addAttribute("roles", roleService.getAll());
             return "update-user";
         }
-        userDto.setRoleId(roleId);
         User user = UserTransformer.convertToEntity(userDto, roleService.readById(userDto.getRoleId()));
         userService.update(user);
-        return "redirect:/home";
+        return "redirect:/users/" + user.getId() + "/read";
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.principal.id == #id")
